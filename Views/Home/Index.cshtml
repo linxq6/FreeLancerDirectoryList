@@ -1,0 +1,148 @@
+﻿@{
+    ViewData["Title"] = "Freelancer Directory";
+}
+
+<h2>Freelancer Directory</h2>
+
+<h3>Add Freelancer</h3>
+<form id="addFreelancerForm">
+    <input type="text" id="username" placeholder="Username" required />
+    <input type="email" id="email" placeholder="Email" required />
+    <input type="text" id="phoneNumber" placeholder="Phone Number" required />
+    <button type="submit">Register</button>
+</form>
+
+<h3>Update Freelancer</h3>
+<form id="updateFreelancerForm" style="display:none;">
+    <input type="hidden" id="updateId" />
+    <input type="text" id="updateUsername" placeholder="Username" required />
+    <input type="email" id="updateEmail" placeholder="Email" required />
+    <input type="text" id="updatePhoneNumber" placeholder="Phone Number" required />
+    <button type="submit">Save Changes</button>
+</form>
+
+<hr />
+
+<h3>Registered Freelancers</h3>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody id="freelancersList">
+    </tbody>
+</table>
+
+<script>
+    const apiBaseUrl = "https://freelancerdirectory-hkh4beddaybugubt.eastasia-01.azurewebsites.net/api/freelancers";
+
+    function loadFreelancers() {
+        fetch(apiBaseUrl)
+            .then(response => response.json())
+            .then(data => {
+                const tbody = document.getElementById("freelancersList");
+                tbody.innerHTML = "";
+                data.forEach(freelancer => {
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>${freelancer.username}</td>
+                            <td>${freelancer.email}</td>
+                            <td>${freelancer.phoneNumber}</td>
+                            <td>${freelancer.isArchived ? "Archived" : "Active"}</td>
+                            <td>
+                                <button onclick="editFreelancer(${freelancer.id}, '${freelancer.username}', '${freelancer.email}', '${freelancer.phoneNumber}')">Edit</button>
+                                <button onclick="deleteFreelancer(${freelancer.id})">Delete</button>
+                                ${freelancer.isArchived
+                                    ? `<button onclick="unarchiveFreelancer(${freelancer.id})">Unarchive</button>`
+                                    : `<button onclick="archiveFreelancer(${freelancer.id})">Archive</button>`}
+                            </td>
+                        </tr>
+                    `;
+                });
+            })
+            .catch(error => console.error("Error loading freelancers:", error));
+    }
+
+    document.getElementById("addFreelancerForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        const freelancer = {
+            username: document.getElementById("username").value,
+            email: document.getElementById("email").value,
+            phoneNumber: document.getElementById("phoneNumber").value
+        };
+        fetch(apiBaseUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(freelancer)
+        })
+        .then(response => response.json())
+        .then(() => {
+            alert("Freelancer added successfully!");
+            loadFreelancers();
+        })
+        .catch(error => console.error("Error adding freelancer:", error));
+    });
+
+    function editFreelancer(id, username, email, phoneNumber) {
+        document.getElementById("updateId").value = id;
+        document.getElementById("updateUsername").value = username;
+        document.getElementById("updateEmail").value = email;
+        document.getElementById("updatePhoneNumber").value = phoneNumber;
+        document.getElementById("updateFreelancerForm").style.display = "block";
+    }
+
+    document.getElementById("updateFreelancerForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        const id = document.getElementById("updateId").value;
+        const freelancer = {
+            username: document.getElementById("updateUsername").value,
+            email: document.getElementById("updateEmail").value,
+            phoneNumber: document.getElementById("updatePhoneNumber").value
+        };
+        fetch(`${apiBaseUrl}/${id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(freelancer)
+        })
+        .then(() => {
+            alert("Freelancer updated successfully!");
+            document.getElementById("updateFreelancerForm").style.display = "none";
+            loadFreelancers();
+        })
+        .catch(error => console.error("Error updating freelancer:", error));
+    });
+
+    function deleteFreelancer(id) {
+        fetch(`${apiBaseUrl}/${id}`, { method: "DELETE" })
+            .then(() => {
+                alert("Freelancer deleted successfully!");
+                loadFreelancers();
+            })
+            .catch(error => console.error("Error deleting freelancer:", error));
+    }
+
+    function archiveFreelancer(id) {
+        fetch(`${apiBaseUrl}/${id}/archive`, { method: "PUT" })
+            .then(() => {
+                alert("Freelancer archived successfully!");
+                loadFreelancers();
+            })
+            .catch(error => console.error("Error archiving freelancer:", error));
+    }
+
+    function unarchiveFreelancer(id) {
+        fetch(`${apiBaseUrl}/${id}/unarchive`, { method: "PUT" })
+            .then(() => {
+                alert("Freelancer unarchived successfully!");
+                loadFreelancers();
+            })
+            .catch(error => console.error("Error unarchiving freelancer:", error));
+    }
+
+    loadFreelancers();
+</script>

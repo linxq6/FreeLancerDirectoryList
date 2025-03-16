@@ -1,0 +1,119 @@
+[
+  {
+    "ContainingType": "FreeLancerDirectoryList.Controllers.FreelancerController",
+    "Method": "CreateFreelancer",
+    "RelativePath": "api/freelancers",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "freelancer",
+        "Type": "Freelancer",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FreeLancerDirectoryList.Controllers.FreelancerController",
+    "Method": "GetFreelancers",
+    "RelativePath": "api/freelancers",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "search",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FreeLancerDirectoryList.Controllers.FreelancerController",
+    "Method": "GetFreelancer",
+    "RelativePath": "api/freelancers/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FreeLancerDirectoryList.Controllers.FreelancerController",
+    "Method": "UpdateFreelancer",
+    "RelativePath": "api/freelancers/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "freelancer",
+        "Type": "Freelancer",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FreeLancerDirectoryList.Controllers.FreelancerController",
+    "Method": "DeleteFreelancer",
+    "RelativePath": "api/freelancers/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FreeLancerDirectoryList.Controllers.FreelancerController",
+    "Method": "ArchiveFreelancer",
+    "RelativePath": "api/freelancers/{id}/archive",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FreeLancerDirectoryList.Controllers.FreelancerController",
+    "Method": "UnarchiveFreelancer",
+    "RelativePath": "api/freelancers/{id}/unarchive",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

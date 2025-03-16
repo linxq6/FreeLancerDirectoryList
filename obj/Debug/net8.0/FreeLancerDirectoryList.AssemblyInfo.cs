@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FreeLancerDirectoryList")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9c25b5bd7f2fda025785214f65c92b6257f96c06")]
 [assembly: System.Reflection.AssemblyProductAttribute("FreeLancerDirectoryList")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FreeLancerDirectoryList")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

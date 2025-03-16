@@ -35,13 +35,32 @@ namespace FreeLancerDirectoryList.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetFreelancers([FromQuery] string search)
+        public async Task<IActionResult> GetFreelancers([FromQuery] string search = "")
         {
+            if (string.IsNullOrWhiteSpace(search))
+            {
+                var allFreelancers = await _context.Freelancers.ToListAsync();
+                return Ok(allFreelancers);
+            }
+
+            if (int.TryParse(search, out int freelancerId))
+            {
+                var freelancerById = await _context.Freelancers
+                    .Include(f => f.Skillsets)
+                    .Include(f => f.Hobbies)
+                    .FirstOrDefaultAsync(f => f.Id == freelancerId);
+
+                if (freelancerById != null)
+                    return Ok(new List<Freelancer> { freelancerById });
+            }
+
             var freelancers = await _context.Freelancers
-                .Where(f => string.IsNullOrEmpty(search) || f.Username.Contains(search) || f.Email.Contains(search))
+                .Where(f => f.Username.Contains(search) || f.Email.Contains(search))
                 .ToListAsync();
+
             return Ok(freelancers);
         }
+
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateFreelancer(int id, [FromBody] Freelancer freelancer)
